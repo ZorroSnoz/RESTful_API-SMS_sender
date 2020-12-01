@@ -6,6 +6,7 @@ Primary file for the API
 const http = require('http')
 const url = require('url')
 const StringDecoder = require('string_decoder').StringDecoder
+const config = require('./config')
 
 ////////// Create server
 const server = http.createServer((req, res) => {
@@ -59,6 +60,8 @@ const server = http.createServer((req, res) => {
             // convert payload to string
             let payloadString = JSON.stringify(payload)
 
+            // set headers (Content-type)
+            res.setHeader('Content-type', 'application/json')
             // return response
             res.writeHead(statusCode)
             res.end(payloadString)
@@ -70,8 +73,8 @@ const server = http.createServer((req, res) => {
 })
 
 ////////// start listening
-server.listen(3000, ()=>{
-    console.log('Server is listening 3000 port')
+server.listen(config.port, ()=>{
+    console.log(`Server is listening ${config.port} port`)
 })
 
 ////////// define the handlers
